@@ -50,10 +50,11 @@ public class Server {
 
 class serverInitalizer extends ChannelInitializer<Channel>{
 
-    @Resource
-    private HeatBeatHandle heatBeatHandle;
+
     @Override
     protected void initChannel(Channel ch) throws Exception {
-        ch.pipeline().addLast(new IdleStateHandler(5,0,0)).addLast(heatBeatHandle).addLast(new ServerDecoder());
+        ch.pipeline().addLast(new IdleStateHandler(5,0,0))
+                .addLast(new ServerDecoder())
+                .addLast(new HeartBeatHandle());
     }
 }

@@ -11,14 +11,13 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import io.netty.util.CharsetUtil;
-import io.netty.util.concurrent.FutureListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HeatBeatHandle extends SimpleChannelInboundHandler<CustomProtocol> {
-    private final static Logger logger = LoggerFactory.getLogger(HeatBeatHandle.class);
+public class HeartBeatHandle extends SimpleChannelInboundHandler<CustomProtocol> {
+    private final static Logger logger = LoggerFactory.getLogger(HeartBeatHandle.class);
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception{
