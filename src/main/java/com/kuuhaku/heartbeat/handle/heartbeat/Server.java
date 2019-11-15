@@ -1,5 +1,6 @@
-package com.kuuhaku.heartbeat.heartbeat;
+package com.kuuhaku.heartbeat.handle.heartbeat;
 
+import com.kuuhaku.heartbeat.handle.webSocket.webSocketHandler;
 import com.kuuhaku.heartbeat.protocol.ServerDecoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
@@ -49,6 +50,7 @@ class serverInitalizer extends ChannelInitializer<Channel>{
     protected void initChannel(Channel ch) throws Exception {
         ch.pipeline().addLast(new IdleStateHandler(5,0,0))
                 .addLast(new ServerDecoder())
-                .addLast(new HeartBeatHandle());
+                .addLast(new HeartBeatHandle())
+                .addLast(new webSocketHandler());
     }
 }

@@ -1,4 +1,4 @@
-package com.kuuhaku.heartbeat.heartbeat;
+package com.kuuhaku.heartbeat.handle.heartbeat;
 
 import com.kuuhaku.heartbeat.channelMap.HeartBeatMap;
 import com.kuuhaku.heartbeat.protocol.CustomProtocol;
