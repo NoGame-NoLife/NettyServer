@@ -1,5 +1,6 @@
-package com.kuuhaku.heartbeat;
+package com.kuuhaku.heartbeat.heartbeat;
 
+import com.kuuhaku.heartbeat.HeartbeatApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 

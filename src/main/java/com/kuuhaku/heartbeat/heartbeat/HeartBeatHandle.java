@@ -1,4 +1,4 @@
-package com.kuuhaku.heartbeat;
+package com.kuuhaku.heartbeat.heartbeat;
 
 import com.kuuhaku.heartbeat.channelMap.HeartBeatMap;
 import com.kuuhaku.heartbeat.protocol.CustomProtocol;
@@ -21,7 +21,6 @@ public class HeartBeatHandle extends SimpleChannelInboundHandler<CustomProtocol>
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception{
-        System.out.println("outoutoutoutoutoutoutout");
         HeartBeatMap.remove((NioSocketChannel) ctx.channel());
     }
 
@@ -33,12 +32,9 @@ public class HeartBeatHandle extends SimpleChannelInboundHandler<CustomProtocol>
 
     @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception{
-        logger.info("好久没来消息了23333");
         if(evt instanceof IdleStateEvent){
             IdleStateEvent ide = (IdleStateEvent) evt;
             if(ide.state() == IdleState.READER_IDLE){
-                logger.info("好久没来消息了23333");
-
                 CustomProtocol back = new CustomProtocol(0L,"pong");
                 ByteBuf msg = Unpooled.unreleasableBuffer(Unpooled.copiedBuffer(back.toString(), CharsetUtil.UTF_8));
                 ctx.writeAndFlush(msg).addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
@@ -51,5 +47,11 @@ public class HeartBeatHandle extends SimpleChannelInboundHandler<CustomProtocol>
     protected void channelRead0(ChannelHandlerContext ctx, CustomProtocol o) throws Exception {
         logger.info("收到客户端消息:={}",o.getContent());
         HeartBeatMap.put(o.getId(),(NioSocketChannel)ctx.channel());
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception{
+        ctx.close();
+        logger.error("异常信息:",cause);
     }
 }

@@ -1,21 +1,17 @@
-package com.kuuhaku.heartbeat;
+package com.kuuhaku.heartbeat.heartbeat;
 
-import com.kuuhaku.heartbeat.protocol.CustomProtocol;
 import com.kuuhaku.heartbeat.protocol.ServerDecoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.timeout.IdleStateHandler;
-import io.netty.resolver.InetSocketAddressResolver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PreDestroy;
-import javax.annotation.Resource;
 import java.net.InetSocketAddress;
 
 @Component
@@ -49,8 +45,6 @@ public class Server {
 }
 
 class serverInitalizer extends ChannelInitializer<Channel>{
-
-
     @Override
     protected void initChannel(Channel ch) throws Exception {
         ch.pipeline().addLast(new IdleStateHandler(5,0,0))
