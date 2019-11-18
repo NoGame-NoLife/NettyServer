@@ -10,4 +10,9 @@ public class webSocketHandler extends SimpleChannelInboundHandler<TextWebSocketF
         System.out.println(msg.text());
         ctx.channel().writeAndFlush(new TextWebSocketFrame("get..."));
     }
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception{
+        System.out.println("link start....");
+    }
 }

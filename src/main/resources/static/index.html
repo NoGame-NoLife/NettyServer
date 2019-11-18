@@ -120,6 +120,8 @@
             var contents = document.getElementById("responseText");
             contents.value = contents.value +"\n"+ ev.data;
         }
+
+        webSocket.send("test websocket");
     }
 
 </script>
