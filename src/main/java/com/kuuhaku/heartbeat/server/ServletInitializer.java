@@ -1,4 +1,4 @@
-package com.kuuhaku.heartbeat.handle.heartbeat;
+package com.kuuhaku.heartbeat.server;
 
 import com.kuuhaku.heartbeat.HeartbeatApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;

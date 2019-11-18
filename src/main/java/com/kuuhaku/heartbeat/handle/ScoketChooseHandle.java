@@ -1,6 +1,8 @@
 package com.kuuhaku.heartbeat.handle;
 
-import com.kuuhaku.heartbeat.handle.heartbeat.HeartBeatHandle;
+import com.kuuhaku.heartbeat.handle.tcpSocket.HeartBeatHandle;
+import com.kuuhaku.heartbeat.handle.webSocket.webSocketHandler;
+import com.kuuhaku.heartbeat.protocol.TcpSocketDecoder;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -10,7 +12,6 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketFrameAggregator;
 import io.netty.handler.stream.ChunkedWriteHandler;
-import org.springframework.boot.SpringApplication;
 
 import java.util.List;
 
@@ -30,13 +31,20 @@ public class ScoketChooseHandle extends ByteToMessageDecoder {
         if(protocol.startsWith(WEBSOCKET_PREFIX)){
             //websocket请求协议类型
             //SpringApplicationholder.getSpringBeanForClass(PipelineAdd.class)
-            ctx.pipeline().remove(LengthFieldBasedFrameDecoder.class);
-            ctx.pipeline().remove(LengthFieldPrepender.class);
+            System.out.println("dddddddd");
+            webSocketHandleAdd(ctx);
+            ctx.pipeline().remove(TcpSocketDecoder.class);
             ctx.pipeline().remove(HeartBeatHandle.class);
         }
-
+        in.resetReaderIndex();
+        ctx.pipeline().remove(this.getClass());
     }
 
+    /**
+    * @Author Kuuhaku
+    * @Date 2019/11/18 23:21
+    * @Description 获取请求头前缀
+    **/
     private String getPrefix(ByteBuf in){
         int length = in.readableBytes();
         if(length > MAX_LENGTH){
@@ -48,14 +56,15 @@ public class ScoketChooseHandle extends ByteToMessageDecoder {
         return new String(content);
     }
 
-    public void webSocketAdd(ChannelHandlerContext ctx){
+    public void webSocketHandleAdd(ChannelHandlerContext ctx){
         //将请求和应答消息转化为http消息
-        ctx.pipeline().addBefore("byteToBuf","http-codec",new HttpServerCodec());
+        ctx.pipeline().addBefore("tcpDecoder","http-codec",new HttpServerCodec());
         //将http消息的多个部分合并成一个整体
-        ctx.pipeline().addBefore("byteToBuf","agreegator",new HttpObjectAggregator(65535));
-        //想客户端发送http5文件
-        ctx.pipeline().addBefore("byteTobuf","http-chunked",new ChunkedWriteHandler());
-        ctx.pipeline().addBefore("byteToBuf","WebSocketAggregator",new WebSocketFrameAggregator(65535));
-
+        ctx.pipeline().addBefore("tcpDecoder","agreegator",new HttpObjectAggregator(65535));
+        //向客户端发送http5文件
+        ctx.pipeline().addBefore("tcpDecoder","http-chunked",new ChunkedWriteHandler());
+        ctx.pipeline().addBefore("tcpDecoder","WebSocketAggregator",new WebSocketFrameAggregator(65535));
+        //添加websocket处理器处理每条连接的两种请求(http建立连接,后续的为socket)
+        ctx.pipeline().addBefore("tcpDecoder","webSocketHandle",new webSocketHandler());
     }
 }

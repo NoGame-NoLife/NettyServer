@@ -4,15 +4,12 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
-public class webSocketHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
+public class webSocketHandler extends SimpleChannelInboundHandler<Object> {
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
-        System.out.println(msg.text());
-        ctx.channel().writeAndFlush(new TextWebSocketFrame("get..."));
+    protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+        System.out.print("get in websocket handler!");
+        ctx.channel().writeAndFlush(new TextWebSocketFrame("get web"));
     }
 
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception{
-        System.out.println("link start....");
-    }
+
 }

@@ -1,7 +1,8 @@
-package com.kuuhaku.heartbeat.handle.heartbeat;
+package com.kuuhaku.heartbeat.server;
 
-import com.kuuhaku.heartbeat.handle.webSocket.webSocketHandler;
-import com.kuuhaku.heartbeat.protocol.ServerDecoder;
+import com.kuuhaku.heartbeat.handle.ScoketChooseHandle;
+import com.kuuhaku.heartbeat.handle.tcpSocket.HeartBeatHandle;
+import com.kuuhaku.heartbeat.protocol.TcpSocketDecoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -49,8 +50,8 @@ class serverInitalizer extends ChannelInitializer<Channel>{
     @Override
     protected void initChannel(Channel ch) throws Exception {
         ch.pipeline().addLast(new IdleStateHandler(5,0,0))
-                .addLast(new ServerDecoder())
-                .addLast(new HeartBeatHandle())
-                .addLast(new webSocketHandler());
+                .addLast(new ScoketChooseHandle())
+                .addLast("tcpDecoder", new TcpSocketDecoder())
+                .addLast(new HeartBeatHandle());
     }
 }
