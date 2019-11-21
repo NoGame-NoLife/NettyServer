@@ -1,6 +1,7 @@
 package com.kuuhaku.heartbeat.handle;
 
 import com.kuuhaku.heartbeat.handle.tcpSocket.HeartBeatHandle;
+import com.kuuhaku.heartbeat.handle.webSocket.WebSocketPackHandle;
 import com.kuuhaku.heartbeat.handle.webSocket.webSocketHandler;
 import com.kuuhaku.heartbeat.protocol.TcpSocketDecoder;
 import io.netty.buffer.ByteBuf;
@@ -66,5 +67,6 @@ public class ScoketChooseHandle extends ByteToMessageDecoder {
         ctx.pipeline().addBefore("tcpDecoder","WebSocketAggregator",new WebSocketFrameAggregator(65535));
         //添加websocket处理器处理每条连接的两种请求(http建立连接,后续的为socket)
         ctx.pipeline().addBefore("tcpDecoder","webSocketHandle",new webSocketHandler());
+        ctx.pipeline().addBefore("tcpDecoder", "webSocketPackHandle", new WebSocketPackHandle());
     }
 }

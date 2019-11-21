@@ -114,16 +114,15 @@
 
 <script type="text/javascript">
     if(window.WebSocket){
-        webSocket = new WebSocket("ws://localhost:8000/test");
+        webSocket = new WebSocket("localhost:8089");
         //客户端收到服务器的方法，这个方法就会被回调
         webSocket.onmessage = function (ev) {
-            var contents = document.getElementById("responseText");
-            contents.value = contents.value +"\n"+ ev.data;
+            console.log(ev.data);
         }
-
+        console.log("ddddd");
         webSocket.send("test websocket");
     }
-
+    webSocket.send("test websocket");
 </script>
 
 
