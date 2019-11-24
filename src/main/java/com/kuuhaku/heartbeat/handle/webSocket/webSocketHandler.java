@@ -45,7 +45,7 @@ public class webSocketHandler extends SimpleChannelInboundHandler<Object> {
         String localUrl = "ws://"+req.headers().get(HttpHeaderNames.HOST)+req.uri();
         WebSocketServerHandshakerFactory wsf = new WebSocketServerHandshakerFactory(localUrl,null,false);
         WebSocketServerHandshaker wsh = wsf.newHandshaker(req);
-        if(wsh != null){
+        if(wsh == null){
             logger.info("不支持的连接类型");
             WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
         }else{

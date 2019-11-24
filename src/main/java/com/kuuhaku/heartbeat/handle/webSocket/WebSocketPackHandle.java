@@ -1,5 +1,7 @@
 package com.kuuhaku.heartbeat.handle.webSocket;
 
+import com.google.gson.Gson;
+import com.kuuhaku.heartbeat.protocol.CustomProtocol;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -37,13 +39,17 @@ public class WebSocketPackHandle extends SimpleChannelInboundHandler<WebSocketFr
             if(" ".equals(msg)){
                 return;
             }
-            logger.info("暂时不支持文字消息,先转成byte传输!");
-            return;
+            /*System.out.println(msg);
+            logger.info("暂时不支持文字消息,先转成byte传输!");*/
+            Gson formater = new Gson();
+            CustomProtocol entity = formater.fromJson(msg,CustomProtocol.class);
+            ctx.fireChannelRead(entity);
+            //return;
         }
-        if(frame instanceof BinaryWebSocketFrame){
+        /*if(frame instanceof BinaryWebSocketFrame){
             byte[] contentBytes = new byte[frame.content().readableBytes()];
             frame.content().readBytes(contentBytes);
             ctx.fireChannelRead(contentBytes);
-        }
+        }*/
     }
 }

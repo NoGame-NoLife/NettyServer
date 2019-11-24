@@ -36,8 +36,8 @@ public class HeartBeatHandle extends SimpleChannelInboundHandler<CustomProtocol>
             IdleStateEvent ide = (IdleStateEvent) evt;
             if(ide.state() == IdleState.READER_IDLE){
                 CustomProtocol back = new CustomProtocol(0L,"pong");
-                ByteBuf msg = Unpooled.unreleasableBuffer(Unpooled.copiedBuffer(back.toString(), CharsetUtil.UTF_8));
-                ctx.writeAndFlush(msg).addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
+                //ByteBuf msg = Unpooled.unreleasableBuffer(Unpooled.copiedBuffer(back.toString(), CharsetUtil.UTF_8));
+                ctx.writeAndFlush(back).addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
             }
         }
         super.userEventTriggered(ctx,evt);
@@ -47,6 +47,7 @@ public class HeartBeatHandle extends SimpleChannelInboundHandler<CustomProtocol>
     protected void channelRead0(ChannelHandlerContext ctx, CustomProtocol o) throws Exception {
         logger.info("收到客户端消息:={}",o.getContent());
         HeartBeatMap.put(o.getId(),(NioSocketChannel)ctx.channel());
+        ctx.writeAndFlush(new CustomProtocol(0,"server back pong")).addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
     }
 
     @Override
