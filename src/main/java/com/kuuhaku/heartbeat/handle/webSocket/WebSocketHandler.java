@@ -4,7 +4,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.handler.codec.http.*;
-import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketServerHandshaker;
 import io.netty.handler.codec.http.websocketx.WebSocketServerHandshakerFactory;
 import io.netty.util.CharsetUtil;
@@ -14,8 +13,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ChannelHandler.Sharable
-public class webSocketHandler extends SimpleChannelInboundHandler<Object> {
-    private static Logger logger = LoggerFactory.getLogger(webSocketHandler.class);
+public class WebSocketHandler extends SimpleChannelInboundHandler<Object> {
+    private static Logger logger = LoggerFactory.getLogger(WebSocketHandler.class);
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
         System.out.print("get in websocket handler!");

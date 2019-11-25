@@ -1,6 +1,7 @@
-package com.kuuhaku.heartbeat.protocol;
+package com.kuuhaku.heartbeat.handle.codec;
 
 import com.google.gson.Gson;
+import com.kuuhaku.heartbeat.protocol.CustomProtocol;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;

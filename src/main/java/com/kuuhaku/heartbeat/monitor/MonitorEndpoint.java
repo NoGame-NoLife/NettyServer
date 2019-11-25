@@ -1,6 +1,6 @@
 package com.kuuhaku.heartbeat.monitor;
 
-import com.kuuhaku.heartbeat.channelMap.HeartBeatMap;
+import com.kuuhaku.heartbeat.channelMap.ChannelMap;
 import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
 
@@ -14,7 +14,7 @@ public class MonitorEndpoint {
     public Map<String,String> countMonitor(){
         Map<String,String> countMap = new HashMap<>();
         countMap.put("name","countMap");
-        countMap.put("count", HeartBeatMap.get().entrySet().size()+"");
+        countMap.put("count", ChannelMap.getPool().entrySet().size()+"");
         return countMap;
     }
 

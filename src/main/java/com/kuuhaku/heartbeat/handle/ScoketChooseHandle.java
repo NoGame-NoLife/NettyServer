@@ -1,11 +1,10 @@
 package com.kuuhaku.heartbeat.handle;
 
-import com.kuuhaku.heartbeat.handle.tcpSocket.HeartBeatHandle;
 import com.kuuhaku.heartbeat.handle.webSocket.WebSocketPackHandle;
-import com.kuuhaku.heartbeat.handle.webSocket.webSocketHandler;
-import com.kuuhaku.heartbeat.protocol.ProtocolEncoder;
-import com.kuuhaku.heartbeat.protocol.SocketDecoder;
-import com.kuuhaku.heartbeat.protocol.WebsocketEncoder;
+import com.kuuhaku.heartbeat.handle.webSocket.WebSocketHandler;
+import com.kuuhaku.heartbeat.handle.codec.ProtocolEncoder;
+import com.kuuhaku.heartbeat.handle.codec.TcpSocketDecoder;
+import com.kuuhaku.heartbeat.handle.codec.WebsocketEncoder;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -30,12 +29,10 @@ public class ScoketChooseHandle extends ByteToMessageDecoder {
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
         String protocol = getPrefix(in);
         if(protocol.startsWith(WEBSOCKET_PREFIX)){
-            //websocket请求协议类型
-            //SpringApplicationholder.getSpringBeanForClass(PipelineAdd.class)
+            //添加handle处理websocket协议类型的请求
             webSocketHandleAdd(ctx);
-            ctx.pipeline().remove(SocketDecoder.class);
+            ctx.pipeline().remove(TcpSocketDecoder.class);
             ctx.pipeline().remove(ProtocolEncoder.class);
-            //ctx.pipeline().remove(HeartBeatHandle.class);
         }
         in.resetReaderIndex();
         ctx.pipeline().remove(this.getClass());
@@ -66,7 +63,7 @@ public class ScoketChooseHandle extends ByteToMessageDecoder {
         ctx.pipeline().addBefore("byteToProtocol","http-chunked",new ChunkedWriteHandler());
         ctx.pipeline().addBefore("byteToProtocol","WebSocketAggregator",new WebSocketFrameAggregator(65535));
         //添加websocket处理器处理每条连接的两种请求(http建立连接,后续的为socket)
-        ctx.pipeline().addBefore("byteToProtocol","webSocketHandle",new webSocketHandler());
+        ctx.pipeline().addBefore("byteToProtocol","webSocketHandle",new WebSocketHandler());
         ctx.pipeline().addBefore("byteToProtocol", "webSocketPackHandle", new WebSocketPackHandle());
         ctx.pipeline().addBefore("byteToProtocol", "websocketEncoder", new WebsocketEncoder());
     }

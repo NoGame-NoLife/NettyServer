@@ -13,12 +13,12 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.Resource;
 
 @SpringBootApplication
-public class HeartbeatApplication implements CommandLineRunner {
+public class ServerApplication implements CommandLineRunner {
 
     @Resource
     private Server server;
     public static void main(String[] args) {
-        SpringApplication.run(HeartbeatApplication.class, args);
+        SpringApplication.run(ServerApplication.class, args);
     }
 
     @Override
@@ -26,6 +26,11 @@ public class HeartbeatApplication implements CommandLineRunner {
         server.run();
     }
 
+    /**
+    * @Author Kuuhaku
+    * @Date 2019/11/25 20:39
+    * @Description 暴露端口供监测
+    **/
     @Configuration
     static class MyPointConfiguration{
 

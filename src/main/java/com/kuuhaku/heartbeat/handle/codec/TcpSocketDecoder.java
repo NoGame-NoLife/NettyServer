@@ -1,6 +1,7 @@
-package com.kuuhaku.heartbeat.protocol;
+package com.kuuhaku.heartbeat.handle.codec;
 
 import com.google.gson.Gson;
+import com.kuuhaku.heartbeat.protocol.CustomProtocol;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -8,7 +9,7 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 
 import java.util.List;
 
-public class SocketDecoder extends ByteToMessageDecoder {
+public class TcpSocketDecoder extends ByteToMessageDecoder {
 
 
     @Override

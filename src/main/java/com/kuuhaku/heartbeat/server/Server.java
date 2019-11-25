@@ -1,9 +1,9 @@
 package com.kuuhaku.heartbeat.server;
 
 import com.kuuhaku.heartbeat.handle.ScoketChooseHandle;
-import com.kuuhaku.heartbeat.handle.tcpSocket.HeartBeatHandle;
-import com.kuuhaku.heartbeat.protocol.ProtocolEncoder;
-import com.kuuhaku.heartbeat.protocol.SocketDecoder;
+import com.kuuhaku.heartbeat.handle.DistributeHandle;
+import com.kuuhaku.heartbeat.handle.codec.ProtocolEncoder;
+import com.kuuhaku.heartbeat.handle.codec.TcpSocketDecoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -50,12 +50,12 @@ public class Server {
 class serverInitalizer extends ChannelInitializer<Channel>{
     @Override
     protected void initChannel(Channel ch) throws Exception {
-        ch.pipeline().addLast(new IdleStateHandler(5,0,0))
+        ch.pipeline().addLast(new IdleStateHandler(3,0,0))
                 .addLast(new ScoketChooseHandle())
                 .addLast("protocolEncoder", new ProtocolEncoder())
-                //socket解码器
-                .addLast("byteToProtocol",new SocketDecoder())
+                //TcpSocket解码器
+                .addLast("byteToProtocol",new TcpSocketDecoder())
                 //处理或分发收到的请求
-                .addLast("heartbeatResolve",new HeartBeatHandle());
+                .addLast("heartbeatResolve",new DistributeHandle());
     }
 }
