@@ -5,8 +5,16 @@ import java.io.Serializable;
 public class CustomProtocol implements Serializable {
     private static final long serialVersionUID = -1387161444097900151L;
     private long id;
+    private String usage;
     private String content;
 
+    public String getUsage() {
+        return usage;
+    }
+
+    public void setUsage(String usage) {
+        this.usage = usage;
+    }
     public CustomProtocol(){
     }
 
