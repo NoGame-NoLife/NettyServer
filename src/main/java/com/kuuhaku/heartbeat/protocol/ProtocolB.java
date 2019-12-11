@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
  * @Description TODO
  */
 @Component
-@MessageUsage(usage="p-b")
-public class ProtocolB {
+@MessageUsage(usage="Data")
+public class ProtocolB extends BaseProtocol{
     private String k;
 
     public String getK() {

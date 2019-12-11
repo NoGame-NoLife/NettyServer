@@ -11,8 +11,8 @@ import java.lang.annotation.Target;
  * @Description TODO
  */
 @Component
-@MessageUsage(usage="p-a")
-public class ProtocolA {
+@MessageUsage(usage="Heart")
+public class ProtocolA extends BaseProtocol{
     private int k;
 
     public int getK() {
