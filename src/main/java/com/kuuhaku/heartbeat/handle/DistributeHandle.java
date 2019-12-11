@@ -32,17 +32,19 @@ public class DistributeHandle extends SimpleChannelInboundHandler<CustomProtocol
         if(evt instanceof IdleStateEvent){
             IdleStateEvent ide = (IdleStateEvent) evt;
             if(ide.state() == IdleState.READER_IDLE){
-                CustomProtocol back = new CustomProtocol(0L,"pong");
+                CustomProtocol back = new CustomProtocol(0,"pong");
                 ctx.writeAndFlush(back).addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
             }
         }
         super.userEventTriggered(ctx,evt);
     }
 
+    //分发入口
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, CustomProtocol o) throws Exception {
         logger.info("收到客户端消息:={}",o.getContent());
         ChannelMap.put(o.getId(),(NioSocketChannel)ctx.channel());
+        //根据usage区分发处理消息包内容
         ctx.writeAndFlush(new CustomProtocol(0,"server back pong")).addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
     }
 

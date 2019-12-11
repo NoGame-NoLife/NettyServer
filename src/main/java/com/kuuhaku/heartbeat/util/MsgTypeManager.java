@@ -23,10 +23,11 @@ public class MsgTypeManager<T> extends ApplicationObjectSupport {
     //private ApplicationContext applicationContext;
 
     @PostConstruct
-    private void init(){
+    private void init() throws IllegalAccessException, InstantiationException {
         ApplicationContext applicationContext = super.getApplicationContext();
         Map<String, Object> beanMap = applicationContext.getBeansWithAnnotation(MessageUsage.class);
         System.out.println("count----->"+beanMap.size());
+        beanMap.getClass().newInstance();
         beanMap.forEach((name,bean)->{
             System.out.println("bean.name--->"+name);
             String annotation = bean.getClass().getAnnotation(MessageUsage.class).usage();

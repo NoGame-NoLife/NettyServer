@@ -4,13 +4,13 @@ import java.io.Serializable;
 
 public class CustomProtocol implements Serializable {
     private static final long serialVersionUID = -1387161444097900151L;
-    private long id;
+    private int id;
     private String content;
 
     public CustomProtocol(){
     }
 
-    public CustomProtocol(long id, String content) {
+    public CustomProtocol(int id, String content) {
         this.id = id;
         this.content = content;
     }
@@ -27,7 +27,7 @@ public class CustomProtocol implements Serializable {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 }

@@ -14,12 +14,20 @@ public class TcpSocketDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> out) throws Exception {
+        if (in.readableBytes() < 4) {
+            return;
+        }
+        in.markReaderIndex();
+        int length = in.readInt();
+        if (in.readableBytes() < length) {
+            in.resetReaderIndex();
+            return;
+        }
         byte[] bytes = new byte[in.readableBytes()] ;
         in.readBytes(bytes) ;
         String content = new String(bytes) ;
         Gson gson = new Gson();
         CustomProtocol customProtocol = gson.fromJson(content,CustomProtocol.class);
         out.add(customProtocol) ;
-
     }
 }
