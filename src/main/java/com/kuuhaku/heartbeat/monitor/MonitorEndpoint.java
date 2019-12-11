@@ -1,6 +1,6 @@
 package com.kuuhaku.heartbeat.monitor;
 
-import com.kuuhaku.heartbeat.channelMap.ChannelMap;
+import com.kuuhaku.heartbeat.nettyServer.channelMap.ChannelMap;
 import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
 

@@ -1,4 +1,4 @@
-package com.kuuhaku.heartbeat.handle.webSocket;
+package com.kuuhaku.heartbeat.nettyServer.handle.webSocket;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;

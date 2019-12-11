@@ -1,4 +1,4 @@
-package com.kuuhaku.heartbeat.channelMap;
+package com.kuuhaku.heartbeat.nettyServer.channelMap;
 
 import io.netty.channel.socket.nio.NioSocketChannel;
 
@@ -8,17 +8,17 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ChannelMap {
     private static ChannelMap instence = new ChannelMap();
 
-    private static Map<Long, NioSocketChannel> Pool = new ConcurrentHashMap<>();
+    private static Map<String, NioSocketChannel> Pool = new ConcurrentHashMap<>();
 
-    public static Map<Long, NioSocketChannel> getPool() {
+    public static Map<String, NioSocketChannel> getPool() {
         return Pool;
     }
 
-    public static void set(Map<Long, NioSocketChannel> heartBeatMap) {
+    public static void set(Map<String, NioSocketChannel> heartBeatMap) {
         ChannelMap.Pool = heartBeatMap;
     }
 
-    public static void put(Long id, NioSocketChannel ch){
+    public static void put(String id, NioSocketChannel ch){
         Pool.put(id, ch);
     }
 

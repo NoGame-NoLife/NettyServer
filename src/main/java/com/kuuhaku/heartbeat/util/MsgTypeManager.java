@@ -1,13 +1,10 @@
 package com.kuuhaku.heartbeat.util;
 
-import com.kuuhaku.heartbeat.annotation.MessageUsage;
-import com.kuuhaku.heartbeat.handle.BaseDeal;
-import org.springframework.beans.BeansException;
+import com.kuuhaku.heartbeat.nettyServer.annotation.MessageUsage;
+import com.kuuhaku.heartbeat.nettyServer.handle.BaseDeal;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.support.ApplicationObjectSupport;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
@@ -33,9 +30,9 @@ public class MsgTypeManager extends ApplicationObjectSupport {
         beanMap.forEach((name,bean)->{
             System.out.println("load class --->"+name);
             String usage = bean.getClass().getAnnotation(MessageUsage.class).usage();
-            clazzMap.put(usage, bean.getClass());
+            clazzMap.put(usage.toUpperCase(), bean.getClass());
             //获取对应deal实现类
-            dealMap.put(usage,(BaseDeal) applicationContext.getBean(usage+"Deal"));
+            dealMap.put(usage.toUpperCase(),(BaseDeal) applicationContext.getBean(usage+"Deal"));
         });
     }
 
@@ -43,16 +40,4 @@ public class MsgTypeManager extends ApplicationObjectSupport {
         return dealMap.get(usage);
     }
 
-    //@Override
-    //public void setApplicationContext(ApplicationContext context) throws BeansException {
-     //   this.applicationContext = context;
-        /*//利用spring获取被target标记的所有类
-            Map<String, Object> beanMap = context.getBeansWithAnnotation(MessageUsage.class);
-            System.out.println("count----->"+beanMap.size());
-            beanMap.forEach((name,bean)->{
-                System.out.println("bean.name--->"+name);
-                String annotation = bean.getClass().getAnnotation(MessageUsage.class).usage();
-                System.out.println("annotation-"+annotation);
-            });*/
-    //}
 }

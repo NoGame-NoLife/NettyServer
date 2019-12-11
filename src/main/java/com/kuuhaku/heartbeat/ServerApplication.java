@@ -1,6 +1,6 @@
 package com.kuuhaku.heartbeat;
 
-import com.kuuhaku.heartbeat.server.Server;
+import com.kuuhaku.heartbeat.nettyServer.server.Server;
 import com.kuuhaku.heartbeat.monitor.MonitorEndpoint;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

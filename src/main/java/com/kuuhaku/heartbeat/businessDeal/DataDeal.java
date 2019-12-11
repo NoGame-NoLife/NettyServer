@@ -1,6 +1,6 @@
 package com.kuuhaku.heartbeat.businessDeal;
 
-import com.kuuhaku.heartbeat.handle.BaseDeal;
+import com.kuuhaku.heartbeat.nettyServer.handle.BaseDeal;
 import org.springframework.stereotype.Service;
 
 /**

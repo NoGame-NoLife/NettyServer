@@ -1,9 +1,7 @@
 package com.kuuhaku.heartbeat.protocol;
 
-import com.kuuhaku.heartbeat.annotation.MessageUsage;
+import com.kuuhaku.heartbeat.nettyServer.annotation.MessageUsage;
 import org.springframework.stereotype.Component;
-
-import java.lang.annotation.Target;
 
 /**
  * @Author Kuuhaku

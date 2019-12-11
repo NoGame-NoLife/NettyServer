@@ -1,4 +1,4 @@
-package com.kuuhaku.heartbeat.annotation;
+package com.kuuhaku.heartbeat.nettyServer.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
