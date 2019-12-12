@@ -1,7 +1,12 @@
 package com.kuuhaku.heartbeat.entity;
 
+import com.kuuhaku.heartbeat.nettyServer.annotation.MessageUsage;
+import org.springframework.stereotype.Component;
+
 import java.util.Date;
 
+//@Component
+//@MessageUsage(usage="Viewing")
 public class Viewing{
     private String id         = "";  //id
     private String projectId ="";   //项目ID

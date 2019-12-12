@@ -1,0 +1,7 @@
+<mapper namespace="com.kuuhaku.heartbeat.dao.HeartBeatDao">
+    <select id="countAll"  resultType="int">
+        SELECT count(1) FROM tb_device
+    </select>
+
+
+</mapper>

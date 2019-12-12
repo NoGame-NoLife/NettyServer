@@ -1,11 +1,18 @@
 package com.kuuhaku.heartbeat.nettyServer.handle.codec;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.kuuhaku.heartbeat.protocol.BaseProtocol;
+import com.kuuhaku.heartbeat.protocol.Pa;
+import com.kuuhaku.heartbeat.util.MsgConvertor;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class TcpSocketDecoder extends ByteToMessageDecoder {
@@ -13,7 +20,6 @@ public class TcpSocketDecoder extends ByteToMessageDecoder {
 
     @Override
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf in, List<Object> out) throws Exception {
-        System.out.println("-------------");
         if (in.readableBytes() < 4) {
             return;
         }
@@ -22,7 +28,6 @@ public class TcpSocketDecoder extends ByteToMessageDecoder {
         byte[] lengthArray = new byte[4];
         in.readBytes(lengthArray);
         int length = byteArrayToInt(lengthArray);
-        System.out.println("length:"+length);
         if (in.readableBytes() < length) {
             in.resetReaderIndex();
             return;
@@ -30,9 +35,11 @@ public class TcpSocketDecoder extends ByteToMessageDecoder {
         byte[] bytes = new byte[length] ;
         in.readBytes(bytes) ;
         String content = new String(bytes) ;
+        System.out.println("---------------------------------------------------------------");
         System.out.println(content);
-        Gson gson = new Gson();
-        BaseProtocol base = gson.fromJson(content,BaseProtocol.class);
+        System.out.println("---------------------------------------------------------------");
+        //Gson gson = new Gson();
+        BaseProtocol base = MsgConvertor.fromJson(content);
         out.add(base) ;
     }
     /**

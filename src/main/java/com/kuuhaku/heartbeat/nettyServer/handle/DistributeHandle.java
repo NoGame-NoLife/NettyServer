@@ -2,6 +2,8 @@ package com.kuuhaku.heartbeat.nettyServer.handle;
 
 import com.kuuhaku.heartbeat.nettyServer.channelMap.ChannelMap;
 import com.kuuhaku.heartbeat.protocol.BaseProtocol;
+import com.kuuhaku.heartbeat.service.HeartBeatService;
+import com.kuuhaku.heartbeat.service.HeartBeatServiceImpl;
 import com.kuuhaku.heartbeat.util.MsgTypeManager;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -11,13 +13,16 @@ import io.netty.handler.timeout.IdleState;
 import io.netty.handler.timeout.IdleStateEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class DistributeHandle extends SimpleChannelInboundHandler<BaseProtocol> {
     private final static Logger logger = LoggerFactory.getLogger(DistributeHandle.class);
 
 
+    @Autowired
+    private HeartBeatService heartBeatService;
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception{
@@ -28,6 +33,7 @@ public class DistributeHandle extends SimpleChannelInboundHandler<BaseProtocol> 
     @Override
     public void channelActive(ChannelHandlerContext ctx){
         logger.info("has a connect......");
+        //heartBeatService.count();
         //ctx.writeAndFlush(new BaseProtocol()).addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
 
     }
@@ -49,9 +55,9 @@ public class DistributeHandle extends SimpleChannelInboundHandler<BaseProtocol> 
     protected void channelRead0(ChannelHandlerContext ctx, BaseProtocol o) throws Exception {
         logger.info("收到客户端消息:={}",o.getContent());
         ChannelMap.put(o.getDeviceSerial(),(NioSocketChannel)ctx.channel());
-        //BaseDeal handle = MsgTypeManager.getDeal(o.getUsage());
-        System.out.println("----------------"+o.getDeviceSerial());
-        //String result = handle.deal(o.getContent());
+        String usage = o.getUsage().toUpperCase();
+        BaseDeal handle = MsgTypeManager.getDeal(usage);
+        String result = handle.deal(o.getContent());
         //ctx.writeAndFlush(result).addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
     }
 

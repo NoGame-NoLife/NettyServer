@@ -25,10 +25,7 @@ public class MsgTypeManager extends ApplicationObjectSupport {
     private void init() throws IllegalAccessException, InstantiationException {
         ApplicationContext applicationContext = super.getApplicationContext();
         Map<String, Object> beanMap = applicationContext.getBeansWithAnnotation(MessageUsage.class);
-        System.out.println("count----->"+beanMap.size());
-        beanMap.getClass().newInstance();
         beanMap.forEach((name,bean)->{
-            System.out.println("load class --->"+name);
             String usage = bean.getClass().getAnnotation(MessageUsage.class).usage();
             clazzMap.put(usage.toUpperCase(), bean.getClass());
             //获取对应deal实现类
@@ -36,6 +33,9 @@ public class MsgTypeManager extends ApplicationObjectSupport {
         });
     }
 
+    public static Class getClazz(String usage){
+        return clazzMap.get(usage);
+    }
     public static BaseDeal getDeal(String usage){
         return dealMap.get(usage);
     }

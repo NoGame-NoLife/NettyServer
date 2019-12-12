@@ -1,7 +1,12 @@
 package com.kuuhaku.heartbeat.businessDeal;
 
 import com.kuuhaku.heartbeat.nettyServer.handle.BaseDeal;
+import com.kuuhaku.heartbeat.protocol.Pa;
+import com.kuuhaku.heartbeat.protocol.ProtocolA;
+import com.kuuhaku.heartbeat.protocol.ProtocolB;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @Author Kuuhaku
@@ -9,9 +14,13 @@ import org.springframework.stereotype.Service;
  * @Description TODO
  */
 @Service("DataDeal")
-public class DataDeal implements BaseDeal {
+public class DataDeal implements BaseDeal<ProtocolB> {
     @Override
-    public String deal(String data) {
-        return "this is data deal handler:"+data;
+    public String deal(List<ProtocolB> data) {
+        for(ProtocolB i : data){
+            System.out.println(i.toString());
+        }
+        return "this is data deal handler:";
     }
+
 }
