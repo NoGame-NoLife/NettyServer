@@ -4,9 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.kuuhaku.heartbeat.protocol.BaseProtocol;
+import com.kuuhaku.heartbeat.nettyServer.handle.BaseProtocol;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class MsgConvertor {
         }
         String usage = jso.get(USAGEKEY).getAsString();
         //获取消息内容类型
-        Class contentType = MsgTypeManager.getClazz(usage.toUpperCase());
+        Class contentType = SystemManager.getClazz(usage.toUpperCase());
         JsonElement content = jso.get(CONTENTKEY);
         for(JsonElement single:content.getAsJsonArray()){
             contentList.add(gson.fromJson(single,contentType));

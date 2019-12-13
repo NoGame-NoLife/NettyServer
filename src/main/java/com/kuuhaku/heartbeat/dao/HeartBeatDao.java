@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
  * @Author Kuuhaku
  * @Date 2019/12/12 15:53
  **/
-@Repository
-@Mapper
 public interface HeartBeatDao {
-    int countAll();
+    Integer countAll();
 }

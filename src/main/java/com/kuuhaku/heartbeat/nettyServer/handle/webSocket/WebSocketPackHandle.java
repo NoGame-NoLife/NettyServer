@@ -1,7 +1,7 @@
 package com.kuuhaku.heartbeat.nettyServer.handle.webSocket;
 
 import com.google.gson.Gson;
-import com.kuuhaku.heartbeat.protocol.BaseProtocol;
+import com.kuuhaku.heartbeat.nettyServer.handle.BaseProtocol;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

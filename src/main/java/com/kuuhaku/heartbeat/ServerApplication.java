@@ -2,6 +2,7 @@ package com.kuuhaku.heartbeat;
 
 import com.kuuhaku.heartbeat.nettyServer.server.Server;
 import com.kuuhaku.heartbeat.monitor.MonitorEndpoint;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.endpoint.condition.ConditionalOnEnabledEndpoint;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.annotation.Resource;
 
 @SpringBootApplication
+@MapperScan("com.kuuhaku.heartbeat.dao")
 public class ServerApplication implements CommandLineRunner {
 
     @Resource

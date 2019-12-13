@@ -1,6 +1,7 @@
 package com.kuuhaku.heartbeat.service;
 
 import com.kuuhaku.heartbeat.dao.HeartBeatDao;
+import com.kuuhaku.heartbeat.nettyServer.annotation.ServiceBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,17 +10,12 @@ import org.springframework.stereotype.Service;
  * @Author Kuuhaku
  * @Date 2019/12/12 15:56
  **/
-@Service("heartBeatService")
+@ServiceBean
+@Service
 public class HeartBeatServiceImpl  implements HeartBeatService{
     @Autowired
     private HeartBeatDao heartBeatDao;
 
-    public HeartBeatServiceImpl(){
-        if(heartBeatDao == null){
-            System.out.println("||||||||||||||||||||||||||||||||||||||||||");
-        }
-        System.out.println("----\\\\\\\\\\\\\\\\---------");
-    }
     public int count(){
         int count = heartBeatDao.countAll();
         System.out.println("count:");

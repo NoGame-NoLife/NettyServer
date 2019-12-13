@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
-//@Component
-//@MessageUsage(usage="Viewing")
+@Component
+@MessageUsage(usage="Viewing")
 public class Viewing{
     private String id         = "";  //id
     private String projectId ="";   //项目ID
