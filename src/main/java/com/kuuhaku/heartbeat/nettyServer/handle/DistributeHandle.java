@@ -1,5 +1,6 @@
 package com.kuuhaku.heartbeat.nettyServer.handle;
 
+import com.kuuhaku.heartbeat.cache.SystemCache;
 import com.kuuhaku.heartbeat.nettyServer.channelMap.ChannelMap;
 import com.kuuhaku.heartbeat.service.MongoDBService;
 import com.kuuhaku.heartbeat.util.SystemManager;
@@ -18,7 +19,7 @@ import org.springframework.stereotype.Service;
 public class DistributeHandle extends SimpleChannelInboundHandler<BaseProtocol> {
     private final static Logger logger = LoggerFactory.getLogger(DistributeHandle.class);
 
-
+    private boolean isInit = false;
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception{
@@ -49,8 +50,13 @@ public class DistributeHandle extends SimpleChannelInboundHandler<BaseProtocol> 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, BaseProtocol o) throws Exception {
         logger.info("收到客户端消息:={}",o.getContent());
-        ChannelMap.put(o.getDeviceSerial(),(NioSocketChannel)ctx.channel());
+        //ChannelMap.put(o.getDeviceSerial(),(NioSocketChannel)ctx.channel());
+        String deviceSerial = o.getDeviceSerial();
         String usage = o.getUsage().toUpperCase();
+        //首次通信后根据消息包内容创建缓存空间
+        if(!isInit){
+            SystemCache.addDevice(deviceSerial, usage, (NioSocketChannel) ctx.channel());
+        }
         BaseDeal handle = SystemManager.getDeal(usage);
         String result = handle.deal(o.getContent());
         //ctx.writeAndFlush(result).addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
