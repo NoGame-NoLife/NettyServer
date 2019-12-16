@@ -30,4 +30,11 @@ public class SystemCache {
         }
     }
 
+    //获取指定的channel
+    public static NioSocketChannel getChannel(String deviceSerial, String usage){
+        if(!cache.containsKey(deviceSerial)){return null;}
+        if(!cache.get(deviceSerial).getChannelMap().containsKey(usage)){return null;}
+        return cache.get(deviceSerial).getChannelMap().get(usage);
+    }
+
 }

@@ -16,11 +16,9 @@ public class HeartDeal implements BaseDeal<HeartBeat> {
     private final static String USAGE = "Heart";
     @Override
     public String deal(List<HeartBeat> data) {
-//        Gson gson = new Gson();
-//        ProtocolA a = gson.fromJson(data, ProtocolA.class);
         for(HeartBeat i : data){
-            System.out.println(i.toString());
+            System.out.println("_____________________heartBeat消息:"+i.toString());
         }
-        return "hello this is heart deal handler";
+        return null;
     }
 }

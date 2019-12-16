@@ -13,6 +13,7 @@ import io.netty.handler.timeout.IdleStateEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 
 @Service
@@ -51,15 +52,21 @@ public class DistributeHandle extends SimpleChannelInboundHandler<BaseProtocol> 
     protected void channelRead0(ChannelHandlerContext ctx, BaseProtocol o) throws Exception {
         logger.info("收到客户端消息:={}",o.getContent());
         //ChannelMap.put(o.getDeviceSerial(),(NioSocketChannel)ctx.channel());
-        String deviceSerial = o.getDeviceSerial();
         String usage = o.getUsage().toUpperCase();
+        String deviceSerial = o.getDeviceSerial();
+        if(!StringUtils.isEmpty(deviceSerial)){
+            
+        }
+
         //首次通信后根据消息包内容创建缓存空间
         if(!isInit){
             SystemCache.addDevice(deviceSerial, usage, (NioSocketChannel) ctx.channel());
         }
         BaseDeal handle = SystemManager.getDeal(usage);
         String result = handle.deal(o.getContent());
-        //ctx.writeAndFlush(result).addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
+        if(!StringUtils.isEmpty(result)){
+            ctx.writeAndFlush(result).addListener(ChannelFutureListener.CLOSE_ON_FAILURE);
+        }
     }
 
     @Override

@@ -15,6 +15,7 @@ import java.util.List;
 public class ViewingDeal implements BaseDeal<Viewing> {
     @Override
     public String deal(List<Viewing> data) {
+        System.out.println("--------viewing数据:"+data.size());
         return null;
     }
 }

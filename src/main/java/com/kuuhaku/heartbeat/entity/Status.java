@@ -4,7 +4,7 @@ import com.kuuhaku.heartbeat.nettyServer.annotation.MessageUsage;
 import org.springframework.stereotype.Component;
 
 @Component
-@MessageUsage(usage="status")
+@MessageUsage(usage="Status")
 public class Status{
     private String key = "";
     private String name = "";

@@ -53,7 +53,7 @@ public class SystemManager extends ApplicationObjectSupport {
     }
 
     public static Class getClazz(String usage){
-        return clazzMap.get(usage);
+        return clazzMap.get(usage.toUpperCase());
     }
     public static BaseDeal getDeal(String usage){
         return dealMap.get(usage);

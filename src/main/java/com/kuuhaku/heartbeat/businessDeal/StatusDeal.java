@@ -15,6 +15,7 @@ import java.util.List;
 public class StatusDeal implements BaseDeal<Status> {
     @Override
     public String deal(List<Status> data) {
+        System.out.println("++++++++status数据:"+data.size());
         return null;
     }
 }
